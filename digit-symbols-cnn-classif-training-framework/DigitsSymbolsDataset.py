@@ -77,6 +77,10 @@ class DigitsSymbolsDataset:
     def load_data(self):
 
         labels_mapping = self.__load_digits_symbols_mapping()
-        self.__load_kaggle_digits_and_symbols(labels_mapping)
-        images_and_labels = self.__join_images_and_targets_in_single_list()
-        return self.__split_data_in_training_in_test(images_and_labels)
+        if None != labels_mapping:
+            self.__load_kaggle_digits_and_symbols(labels_mapping)
+            images_and_labels = self.__join_images_and_targets_in_single_list()
+            return self.__split_data_in_training_in_test(images_and_labels)
+
+        return None
+
