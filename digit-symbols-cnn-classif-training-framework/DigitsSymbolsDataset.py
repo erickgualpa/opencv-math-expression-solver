@@ -12,6 +12,7 @@ class DigitsSymbolsDataset:
 
         self.__targets = []
         self.__samples = []
+        self.__images_and_labels = []
         self.__train_set = []
         self.__test_set = []
 
@@ -51,18 +52,17 @@ class DigitsSymbolsDataset:
     def __join_images_and_targets_in_single_list(self):
 
         # Join images and targets in a single list for shuffling it
-        images_and_labels = list(zip(self.__get_samples(), self.__get_targets()))
-        np.random.shuffle(images_and_labels)
-        return images_and_labels
+        self.__images_and_labels = list(zip(self.__get_samples(), self.__get_targets()))
+        np.random.shuffle(self.__images_and_labels)
 
-    def __split_data_in_training_in_test(self, images_and_labels):
+    def __split_data_in_training_in_test(self):
 
         # Split data in training and test
         test_set_percent = 0.1
-        train_set_percent_len = int(len(images_and_labels) * (1.0 - test_set_percent))
+        train_set_percent_len = int(len(self.__images_and_labels) * (1.0 - test_set_percent))
 
-        self.__train_set = images_and_labels[:train_set_percent_len]
-        self.__test_set = images_and_labels[train_set_percent_len:]
+        self.__train_set = self.__images_and_labels[:train_set_percent_len]
+        self.__test_set = self.__images_and_labels[train_set_percent_len:]
 
         self.__train_set = list(zip(*self.__train_set))
         self.__test_set = list(zip(*self.__test_set))
@@ -74,13 +74,13 @@ class DigitsSymbolsDataset:
 
         return (x_train, y_train), (x_test, y_test)
 
-    def load_data(self):
+    def __load_data(self):
 
         labels_mapping = self.__load_digits_symbols_mapping()
-        if None != labels_mapping:
+        if labels_mapping is not None:
             self.__load_kaggle_digits_and_symbols(labels_mapping)
-            images_and_labels = self.__join_images_and_targets_in_single_list()
-            return self.__split_data_in_training_in_test(images_and_labels)
+            self.__join_images_and_targets_in_single_list()
+            return self.__split_data_in_training_in_test()
 
         return None
 
