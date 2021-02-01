@@ -8,6 +8,7 @@ from constants import DIGITS_SYMBOLS_MAPPING, DATASET_PATH
 
 
 class DigitsSymbolsDataset:
+
     def __init__(self):
 
         self.__targets = []
