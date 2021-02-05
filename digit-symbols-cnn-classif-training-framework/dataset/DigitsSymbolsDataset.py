@@ -1,4 +1,3 @@
-# TODO: HANDLE import load_image, pre_cnn_image_processing
 from os import listdir
 import numpy as np
 import os
@@ -6,6 +5,9 @@ import json
 
 from constants import DIGITS_SYMBOLS_MAPPING, DATASET_PATH
 
+import sys
+sys.path.append("../..") # handwritten-math-expressions-solver/common
+from common.image_processing import load_image, pre_cnn_image_processing
 
 class DigitsSymbolsDataset:
 
@@ -75,7 +77,7 @@ class DigitsSymbolsDataset:
 
         return (x_train, y_train), (x_test, y_test)
 
-    def __load_data(self):
+    def load_data(self):
 
         labels_mapping = self.__load_digits_symbols_mapping()
         if labels_mapping is not None:
