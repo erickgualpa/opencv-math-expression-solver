@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from TextBoxes import TextBoxes
 
 def load_image(img_name):
     img = cv2.imread(img_name, cv2.IMREAD_COLOR)
